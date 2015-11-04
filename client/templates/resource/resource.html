@@ -18,36 +18,3 @@
     {{/with}}
   </div>
 </template>
-
-<template name="resourceCompact">
-  <div class="resource">
-    <p>
-      id: {{_id}}
-    </p>
-    <p>
-      Name: {{name}}
-    </p>
-    <p>
-      Content: {{text}}
-    </p>
-    <a class="button" href="{{pathFor 'resource' rId=_id}}">View</a>
-    <button>Edit</button>
-    <button>Use</button>
-  </div>
-</template>
-
-<template name="createResource">
-  <form>
-    <input type="text" name="resourceName" placeholder="Resource Name">
-    <input type="text" name="resourceText" placeholder="Resource Text"/>
-    <input type="submit" value="Submit">
-  </form>
-</template>
-
-<template name="resourceList">
-  <h3>Resources</h3>
-  <hr/>
-  {{#each resources}}
-    {{> resourceCompact}}
-  {{/each}}
-</template>
