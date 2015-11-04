@@ -18,10 +18,10 @@ Template.resource.helpers({
   getResource: function() {
     return Resources.findOne();
   }
-})
+});
 
 Template.resourceList.helpers({
   resources: function() {
-    return Resources.find({},{sort:{'submittedOn':-1}})
+    return Resources.find({},{sort:{'submittedOn':-1}});
   }
-})
+});

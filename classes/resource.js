@@ -1,20 +1,27 @@
 class Resource {
-  constructor(name) {
+  constructor(name, content) {
     this.name = name;
-    this.lastCommit = -1;
-    this.lastestVersion = null;
+    this.lastCommitId = -1;
+    this.HEAD = null;
+    this.version(content);
   }
-  version() {
-    let previousVersion = this.previousVersion;
-    let version = new Version(this.previousVersion + 1, this.lastestVersion);
-
-    this.lastestVersion = version;
+  version(content) {
+    let version = new Version(++this.lastCommitId, this.HEAD, content);
+    this.HEAD = version;
     return version;
   }
 
   versionList() {
-    let version = this.lastestVersion;
+    let version = this.HEAD;
     let versions = [];
-    
+
+    while(version) {
+      versions.push(version);
+      version = version.parent;
+    }
+
+    return versions;
   }
 }
+
+this.Resource = Resource;
