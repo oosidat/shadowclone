@@ -12,3 +12,13 @@ body {
   margin: 5px;
   width: 250px;
 }
+
+.notfound {
+  text-align: center;
+  height: 100%;
+}
+
+.notfound img {
+  height: 450px;
+  width: auto;
+}
