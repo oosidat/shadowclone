@@ -22,6 +22,6 @@ Template.versionDetail.helpers({
     return Versions.findOne({_id: FlowRouter.getParam('vId')});
   },
   getParents: function() {
-    return Versions.find({});
+    return Versions.find({_id: {$nin: [FlowRouter.getParam('vId')]}});
   }
 });

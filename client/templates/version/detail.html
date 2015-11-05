@@ -15,6 +15,14 @@
   {{else}}
     Loading...
   {{/if}}
-
-  {{> versionList getParents}}
+  <div>
+    <h4>Parent(s):</h4>
+    {{#if isReady "parentVersions"}}
+      {{#each getParents}}
+        {{> version}}
+      {{/each}}
+    {{else}}
+      Loading...
+    {{/if}}
+  </div>
 </template>

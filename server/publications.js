@@ -20,11 +20,8 @@ Meteor.publish('oneVersion', function(vId) {
 });
 
 Meteor.publish('parentVersions', function(vId) {
-  let current = Versions.find({_id: vId});
-  let parents = [];
-  if(current.parent) {
-    return Versions.find({_id: current.parent});
-  }
+  let current = Versions.findOne({_id: vId});
+  return Versions.find({_id: current.parent});
 });
 
 Meteor.publish('resourceVersion', function(vId) {
