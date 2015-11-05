@@ -1,6 +1,13 @@
 <template name="version">
-  <div class="resource">
+  <div class="version">
     <p>id: {{_id}}</p>
     <p>Content: {{content}}</p>
+    <p>Parent:
+      {{#if parent}}
+        {{parent}}
+      {{else}}
+        No Parent
+      {{/if}}
+    </p>
   </div>
 </template>

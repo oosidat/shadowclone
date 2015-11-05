@@ -4,7 +4,7 @@ body {
   padding: 20px;
 }
 
-.resource {
+.resource, .version {
   display: inline-block;
   border: 1px solid grey;
   border-radius: 5px;
