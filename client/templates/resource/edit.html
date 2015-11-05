@@ -1,0 +1,11 @@
+<template name="editResource">
+  <p>LastVersion: {{getResource.lastCommit}}</p>
+  <form>
+    <input type="hidden" name="resourceId" value="{{getResource._id}}">
+    <input type="text" name="resourceName" placeholder="Resource Name" value="{{getResource.name}}">
+    <input type="text" name="resourceContent" placeholder="Resource Content" value="{{getLastVersionContent(getResource.lastCommit)}}">
+    <input type="submit" value="Submit">
+  </form>
+
+  {{> versionList}}
+</template>

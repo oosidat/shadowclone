@@ -1,23 +1,14 @@
 <template name="resourceCompact">
   <div class="resource">
-    <p>
-      id: {{_id}}
-    </p>
-    <p>
-      Name: {{name}}
-    </p>
-    <p>
-      Content: {{text}}
-    </p>
-    <a class="button" href="{{pathFor 'resource' rId=_id}}">View</a>
-    <button>Edit</button>
-    <button>Use</button>
+    <p>id: {{_id}}</p>
+    <p>Name: {{name}}</p>
+    <p>Branch: {{branch}}</p>
+    <p>Head: <a href="{{pathFor 'resourceVersionEdit' rId=_id vId=head}}">{{head}}</a></p>
   </div>
 </template>
 
 <template name="resourceList">
   <h3>Resources</h3>
-  <hr/>
   {{#each resources}}
     {{> resourceCompact}}
   {{/each}}

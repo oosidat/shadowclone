@@ -3,18 +3,14 @@
     <a href="{{pathFor 'home'}}">Home</a>
   </div>
   <div class="resource">
-    {{#with getResource}}
+    <p>id: {{getResource._id}}</p>
+    <p>Name: {{getResource.name}}</p>
+    <p>LastCommit: {{getResource.lastCommit}}</p>
     <p>
-      id: {{_id}}
+      Content: {{getLastVersionContent(getResource.lastCommit)}}
     </p>
-    <p>
-      Name: {{name}}
-    </p>
-    <p>
-      Content: {{text}}
-    </p>
-    <button>Edit</button>
-    <button>Use</button>
-    {{/with}}
+    <a class="button" href="{{pathFor 'resourceEdit' rId=getResource._id}}">Edit</a>
+    <a class="button" href="{{pathFor 'resourceUse' rId=getResource._id}}">Use</a>
   </div>
+  {{> versionList}}
 </template>

@@ -1,0 +1,10 @@
+<template name="useResource">
+  <p>LastVersion: {{getResource.lastCommit}}</p>
+  <form>
+    <input type="hidden" name="resourceId" value="{{getResource._id}}">
+    <input type="hidden" name="lastCommit" value="{{getResource.lastCommit}}">
+    <input type="text" name="resourceName" value="{{getResource.name}}">
+    <input type="text" name="usage" placeholder="Usage Name">
+    <input type="submit" value="Submit">
+  </form>
+</template>
