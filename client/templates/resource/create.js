@@ -13,7 +13,8 @@ Template.createResource.events({
     let resourceId = Resources.insert({
       name: name,
       branch: 'master',
-      head: versionId
+      head: versionId,
+      upstream: null
     });
 
     event.target.resourceName.value = '';

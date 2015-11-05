@@ -18,6 +18,9 @@ Template.editResource.helpers({
     } else {
       return;
     }
+  },
+  isHeadCurrent: function(head, currentVersion) {
+    return head === currentVersion;
   }
 });
 
@@ -52,7 +55,21 @@ Template.editResource.events({
 
       let newUrl = '/resources/' + rId + '/edit/' + versionId;
       FlowRouter.go(newUrl);
-    }
 
+    } else if (event.target.submitted === 'Branch') {
+      console.log('branching...');
+
+      let branchName = event.target.branchName.value;
+
+      let rId = Resources.insert({
+        name: name,
+        upstream: rId,
+        head: currentVersion,
+        branch: branchName
+      });
+
+      let newUrl = '/resources/' + rId + '/edit/' + currentVersion;
+      FlowRouter.go(newUrl);
+    }
   }
 });

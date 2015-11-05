@@ -7,14 +7,21 @@
       <input type="hidden" name="resourceId" value="{{_id}}">
       <input type="text" name="resourceName" placeholder="Resource Name" value="{{name}}">
 
-
       {{#with getVersion}}
-      <input type="hidden" name="resourceVersion" value="{{_id}}">
-      <input type="text" name="resourceContent" placeholder="Resource Content" value="{{content}}">
+        <input type="hidden" name="resourceVersion" value="{{_id}}">
+        <input type="text" name="resourceContent" placeholder="Resource Content" value="{{content}}">
       {{/with}}
 
       <input type="submit" onclick="this.form.submitted=this.value;" value="Submit">
-      <input type="submit" onclick="this.form.submitted=this.value;" value="Publish">
+
+      <br/>
+
+      <input type="submit" onclick="this.form.submitted=this.value;" value="Publish" disabled="{{isHeadCurrent head getVersion._id}}">
+
+      <br/>
+
+      <input type="text" name="branchName" placeholder="Branch Name">
+      <input type="submit" onclick="this.form.submitted=this.value;" value="Branch">
     </form>
   {{/with}}
 </template>
