@@ -1,7 +1,8 @@
 <template name="versionCompact">
   <div class="resource">
-    <p>id: {{_id}}</p>
+    <p>id: <a href="{{pathFor 'versionDetail' vId=_id}}">{{_id}}</a></p>
     <p>Content: {{content}}</p>
+    <p>Parent: {{parent}}</p>
   </div>
 </template>
 

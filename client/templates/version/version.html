@@ -1,6 +1,6 @@
 <template name="version">
   <div class="version">
-    <p>id: {{_id}}</p>
+    <p>id: <a href="{{pathFor 'versionDetail' vId=_id}}">{{_id}}</a></p>
     <p>Content: {{content}}</p>
     <p>Parent:
       {{#if parent}}

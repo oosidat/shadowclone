@@ -1,0 +1,20 @@
+<template name="versionDetail">
+
+  {{#if isReady "version"}}
+    <div class="version">
+      <p>id: {{getVersion._id}}</p>
+      <p>Content: {{getVersion.content}}</p>
+      <p>Parent:
+        {{#if getVersion.parent}}
+          {{getVersion.parent}}
+        {{else}}
+          No Parent
+        {{/if}}
+      </p>
+    </div>
+  {{else}}
+    Loading...
+  {{/if}}
+
+  {{> versionList getParents}}
+</template>

@@ -1,19 +1,20 @@
 <template name="editResource">
   {{#with getResource}}
     <h4>Edit Resource: {{_id}}</h4>
-    <p>LastVersion: {{head}}</p>
+    <h5>At: {{getVersion._id}}, Parent: {{getVersion.parent}}</h5>
+    <h5>Head: {{head}}</h5>
     <form>
       <input type="hidden" name="resourceId" value="{{_id}}">
-      <input type="hidden" name="resourceHead" value="{{head}}">
-
       <input type="text" name="resourceName" placeholder="Resource Name" value="{{name}}">
 
-      <input type="text" name="resourceContent" placeholder="Resource Content" value="{{getContent}}">
 
-      <input type="submit" value="Submit">
+      {{#with getVersion}}
+      <input type="hidden" name="resourceVersion" value="{{_id}}">
+      <input type="text" name="resourceContent" placeholder="Resource Content" value="{{content}}">
+      {{/with}}
+
+      <input type="submit" onclick="this.form.submitted=this.value;" value="Submit">
+      <input type="submit" onclick="this.form.submitted=this.value;" value="Publish">
     </form>
-
-    <h5>Current HEAD</h5>
-    {{> version getHeadVersion}}
   {{/with}}
 </template>

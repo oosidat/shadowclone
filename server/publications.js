@@ -10,10 +10,23 @@ Meteor.publish('allVersions', function() {
   return Versions.find({});
 });
 
-Meteor.publish('resourceVersion', function(vId) {
-  return Versions.find({_id: vId});
+Meteor.publish('oneVersion', function(vId) {
+  var version = Versions.find({_id: vId});
+  if(version) {
+    return version;
+  }
+
+  return this.ready();
 });
 
-Meteor.publish('resourceVersions', function(rId) {
-  return Versions.find({resourceId: rId});
+Meteor.publish('parentVersions', function(vId) {
+  let current = Versions.find({_id: vId});
+  let parents = [];
+  if(current.parent) {
+    return Versions.find({_id: current.parent});
+  }
+});
+
+Meteor.publish('resourceVersion', function(vId) {
+  return Versions.find({_id: vId});
 });

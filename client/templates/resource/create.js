@@ -6,7 +6,8 @@ Template.createResource.events({
 
     let versionId = Versions.insert({
       content: text,
-      parent: null
+      parent: null,
+      created: new Date()
     });
 
     let resourceId = Resources.insert({
