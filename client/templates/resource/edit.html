@@ -1,8 +1,12 @@
 <template name="editResource">
+  <div>
+    <a href="{{pathFor 'home'}}">Home</a>
+  </div>
   {{#with getResource}}
     <h4>Edit Resource: {{_id}}</h4>
     <h5>At: {{getVersion._id}}, Parent: {{getVersion.parent}}</h5>
     <h5>Head: {{head}}</h5>
+    <h6>isUptoDateWithUpstream: {{isUptoDate}}</h6>
     <form>
       <input type="hidden" name="resourceId" value="{{_id}}">
       <input type="text" name="resourceName" placeholder="Resource Name" value="{{name}}">

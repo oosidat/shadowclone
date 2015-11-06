@@ -6,6 +6,15 @@ Meteor.publish('oneResource', function(rId) {
   return Resources.find({_id: rId});
 });
 
+Meteor.publish('upstreamResource', function(rId) {
+  let resource = Resources.findOne({_id: rId});
+  if(resource.upstream) {
+    return Resources.find({_id: resource.upstream});
+  } else {
+    return;
+  }
+});
+
 Meteor.publish('allVersions', function() {
   return Versions.find({});
 });
