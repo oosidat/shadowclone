@@ -2,30 +2,31 @@
   <div>
     <a href="{{pathFor 'home'}}">Home</a>
   </div>
+
+  <hr>
+
   {{#with getResource}}
-    <h4>Edit Resource: {{_id}}</h4>
-    <h5>At: {{getVersion._id}}, Parent: {{getVersion.parent}}</h5>
-    <h5>Head: {{head}}</h5>
-    <h6>isUptoDateWithUpstream: {{isUptoDate}}</h6>
+    <p>Editing Resource: {{_id}}</p>
+    <p>Branch Head: {{getBranch.name}} - {{getBranch.version}}</p>
+
+    <hr>
+
     <form>
       <input type="hidden" name="resourceId" value="{{_id}}">
-      <input type="text" name="resourceName" placeholder="Resource Name" value="{{name}}">
 
       {{#with getVersion}}
+        <p>Created At: {{created}}</p>
         <input type="hidden" name="resourceVersion" value="{{_id}}">
+        <p>Content: {{content}}</p>
         <input type="text" name="resourceContent" placeholder="Resource Content" value="{{content}}">
       {{/with}}
 
-      <input type="submit" onclick="this.form.submitted=this.value;" value="Submit">
+      <input type="submit" onclick="this.form.submitted=this.value;" value="Save Edit">
 
-      <br/>
-
-      <input type="submit" onclick="this.form.submitted=this.value;" value="Publish" disabled="{{isHeadCurrent head getVersion._id}}">
-
-      <br/>
+      <hr>
 
       <input type="text" name="branchName" placeholder="Branch Name">
-      <input type="submit" onclick="this.form.submitted=this.value;" value="Branch">
+      <input type="submit" onclick="this.form.submitted=this.value;" value="Use">
     </form>
   {{/with}}
 </template>

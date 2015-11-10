@@ -7,38 +7,26 @@ Template.editResource.helpers({
   getResource: function() {
     return Resources.findOne(FlowRouter.getParam('rId'));
   },
+  getBranch: function() {
+    let branchName = FlowRouter.getParam('branchName');
+    let resource = Resources.findOne(FlowRouter.getParam('rId'));
+    let branch;
+    if(branchName) {
+      branch = {
+        name: branchName,
+        version: resource.heads[branchName]
+      };
+    } else {
+      branch = {
+        name: 'master',
+        version: resource.heads.master
+      };
+    }
+    return branch;
+  },
   getVersion: function() {
     let vId = FlowRouter.getParam('vId');
     return getVersion(vId);
-  },
-  getContent: function() {
-    var head = getVersion(this.head);
-    if(head) {
-      return head.content;
-    } else {
-      return;
-    }
-  },
-  isHeadCurrent: function(head, currentVersion) {
-    return head === currentVersion;
-  },
-  isUptoDate: function() {
-    let rId = FlowRouter.getParam('rId');
-    let resource = Resources.findOne({_id: rId});
-    let resourceUpstream = resource.upstream;
-
-    if (resourceUpstream) {
-      console.log('resourceUpstream', resourceUpstream);
-      let upstream = Resources.findOne({_id: resourceUpstream});
-      console.log(upstream);
-      if (upstream.head === resource.head) {
-        return 'Yes';
-      } else {
-        return 'No';
-      }
-    } else {
-      return 'No Upstream';
-    }
   }
 });
 
@@ -46,47 +34,43 @@ Template.editResource.events({
   'submit form': function (event, template) {
 
     event.preventDefault();
-
-    let name = event.target.resourceName.value;
     let currentVersion = event.target.resourceVersion.value;
     let text = event.target.resourceContent.value;
     let rId = event.target.resourceId.value;
+    let branchName = FlowRouter.getParam('branchName');
 
-    if (event.target.submitted === 'Publish') {
-      console.log('publishing...');
-      Resources.update({
-        _id: rId,
-      }, {
-        $set: {
-          head: currentVersion
-        }
-      });
-      FlowRouter.reload();
-
-    } else if (event.target.submitted === 'Submit') {
+    if (event.target.submitted === 'Save Edit') {
       console.log('submitting...');
+
+      let set = {};
       let versionId = Versions.insert({
         content: text,
         parent: currentVersion,
         created: new Date(),
       });
 
-      let newUrl = '/resources/' + rId + '/edit/' + versionId;
+      set['heads.' + branchName] = versionId;
+
+      Resources.update({_id: rId,}, {$set: set});
+
+      let params = {rId: rId, vId: versionId, branchName: newBranchName};
+      let newUrl = FlowRouter.path('resourceVersionEdit', params);
+
       FlowRouter.go(newUrl);
 
-    } else if (event.target.submitted === 'Branch') {
-      console.log('branching...');
+    } else if (event.target.submitted === 'Use') {
+      console.log('branching/using...');
 
-      let branchName = event.target.branchName.value;
+      let set = {};
+      let newBranchName = event.target.branchName.value;
 
-      let branchId = Resources.insert({
-        name: name,
-        upstream: rId,
-        head: currentVersion,
-        branch: branchName
-      });
+      set['heads.' + newBranchName] = currentVersion;
 
-      let newUrl = '/resources/' + branchId + '/edit/' + currentVersion;
+      Resources.update({_id: rId,}, {$set: set});
+
+      let params = {rId: rId, vId: currentVersion, branchName: newBranchName};
+      let newUrl = FlowRouter.path('resourceVersionEdit', params);
+
       FlowRouter.go(newUrl);
     }
   }

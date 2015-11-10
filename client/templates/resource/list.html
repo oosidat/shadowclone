@@ -2,9 +2,13 @@
   <div class="resource">
     <p>id: {{_id}}</p>
     <p>Name: {{name}}</p>
-    <p>Branch: {{branch}}</p>
-    <p>Head: <a href="{{pathFor 'resourceVersionEdit' rId=_id vId=head}}">{{head}}</a></p>
-    <p>Upstream: {{upstream}}</p>
+    <p>Heads:
+      <ul>
+      {{#each getHeads heads}}
+        <li>{{branch}}: <a href="{{pathFor 'resourceVersionEdit' rId=../_id vId=version branchName=branch}}">{{version}}</a></li>
+      {{/each}}
+      </ul>
+    </p>
   </div>
 </template>
 

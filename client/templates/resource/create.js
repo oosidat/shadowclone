@@ -6,16 +6,18 @@ Template.createResource.events({
 
     let versionId = Versions.insert({
       content: text,
+      created: new Date(),
       parent: null,
-      created: new Date()
     });
 
-    let resourceId = Resources.insert({
+    let resource = {
       name: name,
-      branch: 'master',
-      head: versionId,
-      upstream: null
-    });
+      heads: {
+        master: versionId
+      }
+    };
+
+    let resourceId = Resources.insert(resource);
 
     event.target.resourceName.value = '';
     event.target.resourceText.value = '';
