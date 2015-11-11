@@ -14,7 +14,8 @@ Template.createResource.events({
       name: name,
       heads: {
         master: versionId
-      }
+      },
+      upstream: null
     };
 
     let resourceId = Resources.insert(resource);

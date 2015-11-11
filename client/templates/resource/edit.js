@@ -11,6 +11,7 @@ Template.editResource.helpers({
     let branchName = FlowRouter.getParam('branchName');
     let resource = Resources.findOne(FlowRouter.getParam('rId'));
     let branch;
+
     if(branchName) {
       branch = {
         name: branchName,
@@ -34,15 +35,17 @@ Template.editResource.events({
   'submit form': function (event, template) {
 
     event.preventDefault();
+
     let currentVersion = event.target.resourceVersion.value;
-    let text = event.target.resourceContent.value;
     let rId = event.target.resourceId.value;
     let branchName = FlowRouter.getParam('branchName');
+
+    let text = event.target.resourceContent.value;
+    let set = {};
 
     if (event.target.submitted === 'Save Edit') {
       console.log('submitting...');
 
-      let set = {};
       let versionId = Versions.insert({
         content: text,
         parent: currentVersion,
@@ -50,28 +53,41 @@ Template.editResource.events({
       });
 
       set['heads.' + branchName] = versionId;
-
       Resources.update({_id: rId,}, {$set: set});
-
-      let params = {rId: rId, vId: versionId, branchName: newBranchName};
-      let newUrl = FlowRouter.path('resourceVersionEdit', params);
-
-      FlowRouter.go(newUrl);
+      currentVersion = versionId;
 
     } else if (event.target.submitted === 'Use') {
       console.log('branching/using...');
 
-      let set = {};
       let newBranchName = event.target.branchName.value;
 
       set['heads.' + newBranchName] = currentVersion;
-
       Resources.update({_id: rId,}, {$set: set});
+      branchName = newBranchName;
 
-      let params = {rId: rId, vId: currentVersion, branchName: newBranchName};
-      let newUrl = FlowRouter.path('resourceVersionEdit', params);
+    } else if (event.target.submitted === 'Consume') {
+      console.log('consuming...');
 
-      FlowRouter.go(newUrl);
+      let consumeName = event.target.consumeName.value;
+
+      let resource = {
+        name: consumeName,
+        heads: {
+          master: currentVersion
+        },
+        upstream: {
+          id: rId,
+          branch: branchName
+        }
+      };
+
+      rId = Resources.insert(resource);
+      branchName = 'master';
+
     }
+
+    let params = {rId: rId, vId: currentVersion, branchName: branchName};
+    let newUrl = FlowRouter.path('resourceVersionEdit', params);
+    FlowRouter.go(newUrl);
   }
 });

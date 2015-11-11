@@ -2,6 +2,14 @@
   <div class="resource">
     <p>id: {{_id}}</p>
     <p>Name: {{name}}</p>
+    <p>
+      Upstream:
+      {{#if upstream}}
+        {{upstream.id}} - {{upstream.branch}}
+      {{else}}
+        No Upstream
+      {{/if}}
+    </p>
     <p>Heads:
       <ul>
       {{#each getHeads heads}}
