@@ -3,13 +3,21 @@ function getVersion(versionId) {
   return Versions.findOne({_id: versionId});
 }
 
+function getResourceById() {
+  return Resources.findOne(FlowRouter.getParam('rId'));
+}
+
+function getBranchName() {
+  return FlowRouter.getParam('branchName');
+}
+
 Template.editResource.helpers({
   getResource: function() {
-    return Resources.findOne(FlowRouter.getParam('rId'));
+    return getResourceById();
   },
   getBranch: function() {
-    let branchName = FlowRouter.getParam('branchName');
-    let resource = Resources.findOne(FlowRouter.getParam('rId'));
+    let branchName = getBranchName();
+    let resource = getResourceById();
     let branch;
 
     if(branchName) {
@@ -38,7 +46,7 @@ Template.editResource.events({
 
     let currentVersion = event.target.resourceVersion.value;
     let rId = event.target.resourceId.value;
-    let branchName = FlowRouter.getParam('branchName');
+    let branchName = getBranchName();
 
     let text = event.target.resourceContent.value;
     let set = {};
