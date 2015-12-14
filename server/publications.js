@@ -1,5 +1,5 @@
 Meteor.publish('allResources', function() {
-  return Resources.find({});
+  return Resources.find({}, {sort: {_id: 1}});
 });
 
 Meteor.publish('oneResource', function(rId) {
@@ -16,7 +16,7 @@ Meteor.publish('upstreamResource', function(rId) {
 });
 
 Meteor.publish('allVersions', function() {
-  return Versions.find({});
+  return Versions.find({}, {sort: {_id: 1}});
 });
 
 Meteor.publish('oneVersion', function(vId) {
